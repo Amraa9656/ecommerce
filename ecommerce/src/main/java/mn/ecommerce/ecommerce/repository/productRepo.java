@@ -16,8 +16,8 @@ public interface productRepo extends JpaRepository<Product, Integer> {
 //    @Query("SELECT p FROM Product as p where discount > 1")
 //    Optional<Product> findAllProduct();
 
-    //    @Query("SELECT p FROM Product as p WHERE p.productName=?productName")
-    List<Product> findByProductName(String productName);
+//        @Query("SELECT p FROM Product as p WHERE p.productName=?productName")
+    List<Product> findByProductNameIgnoreCase(String productName);
 
     List<Product> findByDiscount(Integer discount);
 
@@ -25,7 +25,7 @@ public interface productRepo extends JpaRepository<Product, Integer> {
 
     //productName is null
 
-    @Query("select new mn.ecommerce.ecommerce.dto.ProductShortInfo(p.id, p.productName) from Product as p where (:productName is null or p.productName = :productName) and (:discount is null or p.discount=:discount)")
+    @Query("select new mn.ecommerce.ecommerce.dto.ProductShortInfo(p.id, p.productName) from Product as p where (:productName is null or LOWER(p.productName) = :productName) and (:discount is null or p.discount=:discount)")
     Page<ProductShortInfo> search(String productName, Integer discount, Pageable pageable);
 
 

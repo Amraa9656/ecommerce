@@ -80,6 +80,18 @@ public class ProductController {
         }
     }
 
+
+    @GetMapping("searchProductName")
+    public ResponseEntity<List<Product>> searchProductName(@RequestParam(name = "productName") String productName) {
+        try {
+            return ResponseEntity.ok(productService.getByProductId(productName));
+        }catch (Exception e)
+        {
+            log.error("[+] Error: " + e.getMessage());
+            throw e;
+        }
+    }
+
 //    @GetMapping("test")
 //    public ResponseEntity<String>
 

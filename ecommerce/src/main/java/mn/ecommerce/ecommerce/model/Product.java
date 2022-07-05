@@ -32,15 +32,15 @@ public class Product {
     @Column(name="stock", nullable = false)
     private Integer stock;
 
-    @Column(name = "discount", nullable = false , columnDefinition = "integer default 0")
+    @Column(name = "discount", nullable = false)
     @ColumnDefault("0")
     private Integer discount;
 
     @PrePersist
     public void prePersist(){
+        System.out.println("[+] Hello world " + discount);
         if (this.discount==null)
             discount = 0;
-
     }
 
 

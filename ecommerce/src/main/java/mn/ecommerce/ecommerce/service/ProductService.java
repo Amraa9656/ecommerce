@@ -16,6 +16,7 @@ public interface ProductService {
     Page<Product> getPageProduct(Pageable pageable);
 
     Page<ProductShortInfo> searchProductOrDiscount(String productName , Integer discount, Pageable pageable);
+    List<Product> getByProductId(String productName);
 
 
 }

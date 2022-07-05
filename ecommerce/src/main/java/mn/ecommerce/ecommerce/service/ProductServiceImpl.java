@@ -59,7 +59,22 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Page<ProductShortInfo> searchProductOrDiscount(String productName, Integer discount, Pageable pageable) {
 
-        return productRepo.search(productName.toLowerCase(), discount, pageable);
+        try {
+            return productRepo.search(productName.toLowerCase(), discount, pageable);
 
+        }catch (NullPointerException n)
+        {
+            return productRepo.search(productName, discount, pageable);
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
+
+    }
+
+    @Override
+    public List<Product> getByProductId(String productName) {
+        return productRepo.findByProductNameIgnoreCase(productName);
     }
 }
