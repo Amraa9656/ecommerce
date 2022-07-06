@@ -9,7 +9,11 @@ public class ProductShortInfo {
         this.productName = productName;
     }
 
-    protected ProductShortInfo() {
+
+//    protected ProductShortInfo() {
+//    }
+
+    public ProductShortInfo() {
     }
 
     public Integer getId() {

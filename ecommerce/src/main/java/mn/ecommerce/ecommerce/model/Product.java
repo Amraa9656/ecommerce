@@ -22,6 +22,7 @@ public class Product {
     @Column(name = "id")
     private Integer id;
 
+
     @NotBlank
     @Column(name = "product_name")
     private String productName;

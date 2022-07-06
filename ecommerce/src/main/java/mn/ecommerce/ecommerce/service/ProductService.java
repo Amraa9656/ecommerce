@@ -1,6 +1,7 @@
 package mn.ecommerce.ecommerce.service;
 
 import mn.ecommerce.ecommerce.dto.ProductShortInfo;
+import mn.ecommerce.ecommerce.model.Demo;
 import mn.ecommerce.ecommerce.model.Product;
 import mn.ecommerce.ecommerce.model.ReqProductDto;
 import org.springframework.data.domain.Page;
@@ -15,7 +16,7 @@ public interface ProductService {
     Product getProductById(int productId);
     Page<Product> getPageProduct(Pageable pageable);
 
-    Page<ProductShortInfo> searchProductOrDiscount(String productName , Integer discount, Pageable pageable);
+    <T> Page<T> searchProductOrDiscount(String productName , Integer discount, Pageable pageable);
     List<Product> getByProductId(String productName);
 
 

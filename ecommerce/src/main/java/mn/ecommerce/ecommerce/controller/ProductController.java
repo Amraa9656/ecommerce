@@ -3,6 +3,7 @@ package mn.ecommerce.ecommerce.controller;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import mn.ecommerce.ecommerce.dto.ProductShortInfo;
+import mn.ecommerce.ecommerce.model.Demo;
 import mn.ecommerce.ecommerce.model.Product;
 import mn.ecommerce.ecommerce.model.ReqProductDto;
 import mn.ecommerce.ecommerce.service.ProductServiceImpl;
@@ -65,7 +66,7 @@ public class ProductController {
     }
 
     @GetMapping("search")
-    public ResponseEntity<Page<ProductShortInfo>> search(
+    public ResponseEntity<Page<?>> search(
     @RequestParam(name = "productName", required = false) String productName,
     @RequestParam(name = "discount", required = false) Integer discount,
     @RequestParam(name= "size", defaultValue = "3") Integer size,

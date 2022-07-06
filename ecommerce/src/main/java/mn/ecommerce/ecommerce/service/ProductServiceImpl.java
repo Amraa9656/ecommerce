@@ -3,6 +3,8 @@ package mn.ecommerce.ecommerce.service;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import mn.ecommerce.ecommerce.dto.ProductShortInfo;
+import mn.ecommerce.ecommerce.model.Demo;
+import mn.ecommerce.ecommerce.model.Price;
 import mn.ecommerce.ecommerce.model.Product;
 import mn.ecommerce.ecommerce.model.ReqProductDto;
 import mn.ecommerce.ecommerce.repository.productRepo;
@@ -57,19 +59,22 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<ProductShortInfo> searchProductOrDiscount(String productName, Integer discount, Pageable pageable) {
+    public <T> Page<T> searchProductOrDiscount(String productName, Integer discount, Pageable pageable) {
+       return (Page<T>) productRepo.search2(productName, discount,pageable, Price.class);
 
-        try {
-            return productRepo.search(productName.toLowerCase(), discount, pageable);
+//        return productRepo.search(productName, discount, pageable);
 
-        }catch (NullPointerException n)
-        {
-            return productRepo.search(productName, discount, pageable);
-        }
-        catch (Exception e)
-        {
-            throw e;
-        }
+//        try {
+//            return productRepo.search(productName.toLowerCase(), discount, pageable);
+//
+//        }catch (NullPointerException n)
+//        {
+//            return productRepo.search(productName, discount, pageable);
+//        }
+//        catch (Exception e)
+//        {
+//            throw e;
+//        }
 
     }
 
