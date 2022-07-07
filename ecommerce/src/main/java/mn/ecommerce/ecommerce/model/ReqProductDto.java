@@ -19,6 +19,15 @@ public class ReqProductDto {
     @NotNull
     private Integer stock;
 
+    @NotNull
+    @Min(value = 0)
+    @Max(value = 100)
+    private Integer discount;
+
+    @NotNull
+    @Min(value = 0)
+    @Max(value = 1)
+    private Integer isActive;
     protected ReqProductDto() {
     }
 }

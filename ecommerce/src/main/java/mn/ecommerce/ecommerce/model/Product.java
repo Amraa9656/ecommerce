@@ -20,29 +20,23 @@ public class Product {
     @Id
     @GeneratedValue(strategy = AUTO)
     @Column(name = "id")
-    private Integer id;
+    private Long id;
 
 
     @NotBlank
     @Column(name = "product_name")
     private String productName;
 
-    @Column(name = "price", nullable = false)
-    private float price;
+    @Column(name = "price_id", nullable = false)
+    private long priceId;
+
+//    @OneToOne
+//    @JoinColumn(name = "price_id")
+//    @Column(nullable = false)
+//    private Price price;
 
     @Column(name="stock", nullable = false)
     private Integer stock;
-
-    @Column(name = "discount", nullable = false)
-    @ColumnDefault("0")
-    private Integer discount;
-
-    @PrePersist
-    public void prePersist(){
-        System.out.println("[+] Hello world " + discount);
-        if (this.discount==null)
-            discount = 0;
-    }
 
 
 //    @Column(name = "create_date", nullable = false)

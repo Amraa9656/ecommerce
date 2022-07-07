@@ -1,10 +1,10 @@
 package mn.ecommerce.ecommerce.dto;
 
 public class ProductShortInfo {
-    private Integer id;
+    private Long id;
     private String productName;
 
-    public ProductShortInfo(Integer id, String productName) {
+    public ProductShortInfo(Long id, String productName) {
         this.id = id;
         this.productName = productName;
     }
@@ -16,7 +16,7 @@ public class ProductShortInfo {
     public ProductShortInfo() {
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
