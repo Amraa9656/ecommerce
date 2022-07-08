@@ -12,6 +12,8 @@ public class ReqProductDto {
     @NotBlank
     private String productName;
 
+    private ProductType type;
+
     @NotNull
     @Min(value = 100, message = "hhe")
     @Max(value = 20000000, message = "hho")
@@ -25,9 +27,8 @@ public class ReqProductDto {
     private Integer discount;
 
     @NotNull
-    @Min(value = 0)
-    @Max(value = 1)
-    private Integer isActive;
+    private Boolean isActive;
+
     protected ReqProductDto() {
     }
 }

@@ -1,9 +1,12 @@
 package mn.ecommerce.ecommerce.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+
+import java.io.Serializable;
 
 import static javax.persistence.GenerationType.AUTO;
 
@@ -14,7 +17,7 @@ import static javax.persistence.GenerationType.AUTO;
 @Entity
 @Table(name = "Price")
 @Builder
-public class Price {
+public class Price implements Serializable {
 
     @Id
     @GeneratedValue(strategy = AUTO)
@@ -29,8 +32,18 @@ public class Price {
     private Integer discount;
 
     @Column(name = "is_active", nullable = false)
-    @ColumnDefault("0")
-    private Integer isActive;
+    @ColumnDefault("false")
+    private Boolean isActive;
+//
+//    @Column(name = "product_id" , nullable = false)
+//    private Long productId;
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
+
+
 
 //    @PrePersist
 //    public void prePersist(){

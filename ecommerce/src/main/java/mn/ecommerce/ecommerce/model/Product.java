@@ -1,10 +1,12 @@
 package mn.ecommerce.ecommerce.model;
 
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
+import java.util.List;
+import java.util.Set;
 
 import static javax.persistence.GenerationType.AUTO;
 
@@ -15,32 +17,26 @@ import static javax.persistence.GenerationType.AUTO;
 @Entity
 @Table(name = "product")
 @Builder
-public class Product {
+public class Product implements Serializable {
 
     @Id
     @GeneratedValue(strategy = AUTO)
     @Column(name = "id")
     private Long id;
 
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    private List<Price> price;
+
+    @Column(name = "stock", nullable = false)
+    private Integer stock;
+
+
+    @Enumerated(EnumType.STRING)
+    private ProductType type;
+
 
     @NotBlank
     @Column(name = "product_name")
     private String productName;
-
-    @Column(name = "price_id", nullable = false)
-    private long priceId;
-
-//    @OneToOne
-//    @JoinColumn(name = "price_id")
-//    @Column(nullable = false)
-//    private Price price;
-
-    @Column(name="stock", nullable = false)
-    private Integer stock;
-
-
-//    @Column(name = "create_date", nullable = false)
-//    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-//    private LocalDate createDate;
 
 }

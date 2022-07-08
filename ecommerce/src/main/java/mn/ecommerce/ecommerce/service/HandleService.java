@@ -3,7 +3,9 @@ package mn.ecommerce.ecommerce.service;
 import lombok.extern.slf4j.Slf4j;
 import mn.ecommerce.ecommerce.model.Price;
 import mn.ecommerce.ecommerce.model.Product;
+import mn.ecommerce.ecommerce.model.ProductType;
 import mn.ecommerce.ecommerce.model.ReqProductDto;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,24 +19,35 @@ public class HandleService {
         this.productService = productService;
     }
     public Product createOrFail(ReqProductDto req)throws Exception {
-        Product product = null;
-     if (productService.getByProductName(req.getProductName())==null && req.getDiscount()<=100 )
-     {
+
+        if (req.getType().getMinPrice()>=req.getPrice() || req.getType().getMaxPrice() <= req.getPrice()) {
+            throw new ArithmeticException("Error");
+        }
+        Product product;
+     if (productService.getByProductName(req.getProductName())==null && req.getDiscount()<=100 ){
+         product = productService.createProduct(Product.builder()
+                 .productName(req.getProductName())
+                 .stock(req.getStock())
+                 .type(req.getType())
+                 .build());
          Price price = Price.builder()
                  .discount(req.getDiscount())
                  .price(req.getPrice())
                  .isActive(req.getIsActive())
+                 .product(product)
                  .build();
-
-         product = Product.builder()
-                 .productName(req.getProductName())
-                 .priceId(priceService.createPrice(price).getId())
-                 .stock(req.getStock())
-                 .build();
+         priceService.createPrice(price);
      }else {
          throw new Exception("True");
      }
 
-      return productService.createProduct(product);
+      return product;
     }
+
+    public Product getByProductId(Long id){
+        return productService.getByProductId(id);
+    }
+
+
+
 }
