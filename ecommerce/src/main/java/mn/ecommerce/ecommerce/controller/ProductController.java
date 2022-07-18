@@ -2,9 +2,7 @@ package mn.ecommerce.ecommerce.controller;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import mn.ecommerce.ecommerce.dto.ResProduct;
 import mn.ecommerce.ecommerce.dto.ResProductDetail;
-import mn.ecommerce.ecommerce.dto.ResProductPrice;
 import mn.ecommerce.ecommerce.model.Product;
 import mn.ecommerce.ecommerce.model.ProductType;
 import mn.ecommerce.ecommerce.model.ReqProductDto;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Set;
 
 @RestController("product")
 @AllArgsConstructor
@@ -77,8 +74,8 @@ public class ProductController {
     @RequestParam(name = "page" ) Integer page
     ){
         try {
-            productTypes.forEach(System.out::println);
-            return ResponseEntity.ok(productService.searchProductOrDiscount(productName, productTypes, PageRequest.of(page, size)));
+            return ResponseEntity.ok(productService.searchProductOrDiscount(productName, productTypes,
+                    PageRequest.of(page, size)));
         }catch (Exception e) {
             throw e;
         }
@@ -104,7 +101,8 @@ public class ProductController {
         }
     }
     @PutMapping("product")
-    public ResponseEntity<Product> putProduct(@RequestParam(name = "id") Long id, @RequestParam(name = "productName") String productName){
+    public ResponseEntity<Product> putProduct(@RequestParam(name = "id") Long id,
+                                              @RequestParam(name = "productName") String productName){
         try {
             return ResponseEntity.ok(productService.putProduct(id, productName));
         }catch (Exception e){
@@ -113,7 +111,8 @@ public class ProductController {
     }
 
     @PutMapping("productSet")
-    public ResponseEntity<Product> putProductSet(@RequestParam(name = "id") Long id, @RequestParam(name = "productName") String productName){
+    public ResponseEntity<Product> putProductSet(@RequestParam(name = "id") Long id,
+                                                 @RequestParam(name = "productName") String productName){
         try {
             return ResponseEntity.ok(productService.putProductSet(id, productName));
         }catch (Exception e){
@@ -129,6 +128,12 @@ public class ProductController {
             throw e;
         }
     }
+
+    @DeleteMapping("delteProduct")
+    public ResponseEntity<?> deleteProduct(@RequestParam(name = "id") Long id){
+        return ResponseEntity.ok(handleService.deleteProduct(id));
+    }
+
 
 //    @PutMapping("discountStatusUpdate")
 //    public ResponseEntity<Integer> searchProductName(@RequestBody @Valid ProductIdDto req) {

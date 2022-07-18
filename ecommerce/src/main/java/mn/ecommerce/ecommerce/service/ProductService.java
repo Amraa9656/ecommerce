@@ -106,4 +106,13 @@ public class ProductService {
     public List<ResProductDetail> getProductsDetails() {
         return productRepo.getProductDetail();
     }
+
+    public String deleteProduct(Long id) {
+        try {
+            productRepo.deleteById(id);
+        }catch (Exception e){
+            throw e;
+        }
+        return "Success";
+    }
 }

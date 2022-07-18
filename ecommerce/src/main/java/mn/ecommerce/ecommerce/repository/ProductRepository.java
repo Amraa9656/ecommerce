@@ -59,8 +59,12 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 //    Page<Demo> search1(String productName, Integer discount, Pageable pageable);
 
     @Query("select p from Product as p where (:productName is null or p.productName = :productName ) and " +
-            "(:productType is null or p.type in (:productType))")
+            "((:productType) is null or p.type in (:productType))")
    <T> Page<T> search2(String productName, List<ProductType> productType, Pageable pageable, Class<T> t);
+
+
+
+
 
 //    @Modifying
 //    @Query("update Product p set p.discountStatus = 1 where p.id=:id")

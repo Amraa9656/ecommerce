@@ -2,9 +2,8 @@ package mn.ecommerce.ecommerce.model;
 
 public enum ProductType {
     FOOD(1000D, 100000D),
-    Book(100D, 200000D),
+    BOOK(100D, 200000D),
     CLOTHES(5000D, 3000000D);
-
 
     private Double minPrice;
     private Double maxPrice;
