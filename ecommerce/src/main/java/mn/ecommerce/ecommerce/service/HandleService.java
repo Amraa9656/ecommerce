@@ -1,10 +1,13 @@
 package mn.ecommerce.ecommerce.service;
 
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import mn.ecommerce.ecommerce.model.Price;
 import mn.ecommerce.ecommerce.model.Product;
 import mn.ecommerce.ecommerce.model.ReqProductDto;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
 
 @Service
 @Slf4j
@@ -23,7 +26,7 @@ public class HandleService {
             throw new ArithmeticException("Error");
         }
         Product product;
-        if (productService.getByProductName(req.getProductName()) == null && req.getDiscount() <= 100) {
+        if (Objects.isNull(productService.getByProductName(req.getProductName())) && req.getDiscount() <= 100) {
             product = productService.createProduct(Product.builder()
                     .productName(req.getProductName())
                     .stock(req.getStock())
@@ -48,12 +51,25 @@ public class HandleService {
     }
 
 
-    public String deleteProduct(Long id){
-        try {
+    /**
+     * delete vildel hiihdee Product iig bn uu vgvig ehleed shalgaad tuhai product dai bvh
+     * vnen in idewhgvi tolowd bsan ved ustgan
+     * @param id
+     * @return SUCCESS OR FAIL
+     */
+    @SneakyThrows
+    public String deleteProduct(Long id) {
+
+        Product product = productService.getByProductId(id);
+        if (Objects.nonNull(product)) {
+            Price count = product.getPrice().stream()
+                    .filter(f -> f.getIsActive())
+                    .findAny().orElse(null);
+            if (!Objects.isNull(count)) throw new Exception();
             priceService.deletePrice(id);
-            productService.deleteProduct(id);
-        }catch (Exception e){
-            throw e;
+            productService.deleteProduct(product);
+        } else {
+            return "Fail";
         }
         return "Success";
     }

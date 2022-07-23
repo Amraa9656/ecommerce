@@ -2,7 +2,7 @@ package mn.ecommerce.ecommerce.repository;
 
 import mn.ecommerce.ecommerce.dto.ResProduct;
 import mn.ecommerce.ecommerce.dto.ResProductDetail;
-import mn.ecommerce.ecommerce.dto.ResProductPrice;
+import mn.ecommerce.ecommerce.dto.ResProductName;
 import mn.ecommerce.ecommerce.model.Product;
 import mn.ecommerce.ecommerce.model.ProductType;
 import org.springframework.data.domain.Page;
@@ -13,9 +13,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.JoinTable;
 import java.util.List;
-import java.util.Set;
 
 @Transactional
 @Repository
@@ -62,9 +60,15 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "((:productType) is null or p.type in (:productType))")
    <T> Page<T> search2(String productName, List<ProductType> productType, Pageable pageable, Class<T> t);
 
+    @Query("SELECT p.id as productId, p.productName as productName " +
+            "from Product p , Price p1 " +
+            "where  p1.id=:priceId and p.id=p1.product.id")
+    ResProduct findByPriceId(Long priceId);
 
-
-
+    @Query("SELECT new mn.ecommerce.ecommerce.dto.ResProductName(p.id, p.productName)  " +
+            "from Product p , Price p1 " +
+            "where  p1.id=:priceId and p.id=p1.product.id")
+    ResProductName findByPriceId1(Long priceId);
 
 //    @Modifying
 //    @Query("update Product p set p.discountStatus = 1 where p.id=:id")

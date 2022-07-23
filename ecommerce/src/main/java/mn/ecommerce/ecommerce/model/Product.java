@@ -31,7 +31,7 @@ public class Product implements Serializable {
     private Integer stock;
 
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private ProductType type;
 
 

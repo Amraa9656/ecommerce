@@ -2,14 +2,12 @@ package mn.ecommerce.ecommerce.model;
 
 import lombok.Getter;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 
 @Getter
 public class ReqProductDto {
     @NotBlank
+    @Pattern(regexp = "[pre-]{10}")
     private String productName;
 
     private ProductType type;

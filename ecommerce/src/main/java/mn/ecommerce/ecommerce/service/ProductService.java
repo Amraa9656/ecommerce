@@ -3,11 +3,12 @@ package mn.ecommerce.ecommerce.service;
 import lombok.extern.slf4j.Slf4j;
 import mn.ecommerce.ecommerce.dto.ResProduct;
 import mn.ecommerce.ecommerce.dto.ResProductDetail;
-import mn.ecommerce.ecommerce.dto.ResProductPrice;
-import mn.ecommerce.ecommerce.model.Price;
+import mn.ecommerce.ecommerce.dto.ResProductName;
 import mn.ecommerce.ecommerce.model.Product;
 import mn.ecommerce.ecommerce.model.ProductType;
 import mn.ecommerce.ecommerce.repository.ProductRepository;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 @Slf4j
@@ -107,12 +107,20 @@ public class ProductService {
         return productRepo.getProductDetail();
     }
 
-    public String deleteProduct(Long id) {
-        try {
-            productRepo.deleteById(id);
-        }catch (Exception e){
-            throw e;
-        }
+    public String deleteProduct(Product product) {
+        productRepo.delete(product);
         return "Success";
     }
+    @Cacheable(value = "product", key = "#priceId")
+    public ResProduct getByPriceId(Long priceId) {
+       return productRepo.findByPriceId(priceId);
+
+    }
+
+    @Cacheable(value = "product", key = "#priceId")
+    public ResProductName getByPriceId1(Long priceId) {
+        return productRepo.findByPriceId1(priceId);
+
+    }
+
 }

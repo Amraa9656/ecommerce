@@ -1,11 +1,12 @@
 package mn.ecommerce.ecommerce.dto;
 
-import mn.ecommerce.ecommerce.model.Price;
+import java.io.Serializable;
 
+public interface ResProduct extends Serializable {
 
-public interface ResProduct {
-     Long getId();
-     String getName();
-     Price getPrice();
+    Long getProductId();
+
+    String getProductName();
+
 
 }
